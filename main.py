@@ -8,11 +8,17 @@ class TreeNode:
 class OrderStatisticsTree:
     def __init__(self):
         self.root = None
-    
-    def insert(self, value):
-        pass
+        self.length = 0
+
+    def insert(self, value): 
+        if not self.root: 
+            self.root = TreeNode(value)
+            return 
+        else:
+            pass
 
     def p_percentile(self, p):
         pass
+        
 
 
