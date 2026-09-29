@@ -12,10 +12,26 @@ class OrderStatisticsTree:
 
     def insert(self, value): 
         if not self.root: 
-            self.root = TreeNode(value)
-            return 
+            self.root = TreeNode(value=value,num_left=0)
+            self.length = 1
+            return
+        cur = self.root
+        parent = self.root
+        while cur:
+            if cur.value <= value:
+                parent = cur
+                cur = cur.right
+            else:
+                cur.num_left += 1
+                parent = cur
+                cur = cur.left
+        newNode = TreeNode(value=value,num_left=0)
+        if parent.value <= value:
+            parent.right = newNode
         else:
-            pass
+            parent.left = newNode
+
+
 
     def p_percentile(self, p):
         pass
