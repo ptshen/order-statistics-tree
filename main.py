@@ -21,7 +21,10 @@ class OrderStatisticsTree:
 
     def p_percentile(self, p): 
         if self.root:
-            k = math.floor(p * self.length) # interested in the kth treenode
+            if p == 1:
+                k = self.length - 1
+            else:
+                k = math.floor(p * self.length) # interested in the kth treenode
 
             foo = self.root
             while foo.num_left != k:
