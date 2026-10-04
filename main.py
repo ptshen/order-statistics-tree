@@ -46,9 +46,11 @@ class OrderStatisticsTree:
     Returns the value of the node associated with the pth percentile in the tree.     
     """
     def p_percentile(self, p): 
+        if not 0 <= p <= 1:
+            raise ValueError("p must be between 0 and 1")
         if self.length == 0:
-            return None 
-        
+            return None
+
         foo = self.root
         k = math.floor(p * self.length)
 
