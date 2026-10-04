@@ -1,11 +1,11 @@
 import math
 
 class TreeNode: 
-    def __init__(self, value, left=None, right=None, num_left = 0):
+    def __init__(self, value, left=None, right=None, num_below = 1):
         self.value = value
-        self.left = None
-        self.right = None
-        self.num_left = num_left # nodes strictly left (current node not inclusive)
+        self.left = left
+        self.right = right
+        self.num_below = num_below # inclusive
 
 class OrderStatisticsTree:
     def __init__(self):
@@ -14,28 +14,48 @@ class OrderStatisticsTree:
 
     def insert(self, value): 
         if not self.root: 
-            self.root = TreeNode(value)
-            return 
-        else:
-            pass
-
-    def p_percentile(self, p): 
-        if self.root:
-            if p == 1:
-                k = self.length - 1
+            self.root = TreeNode(value=value,num_left=0)
+            self.length = 1
+            return
+        cur = self.root
+        parent = self.root
+        while cur:
+            parent = cur
+            cur.num_below += 1
+            if cur.value <= value:
+                cur = cur.right
             else:
-                k = math.floor(p * self.length) # interested in the kth treenode
-
-            foo = self.root
-            while foo.num_left != k:
-                if foo.num_left < k: 
-                    foo = foo.right
-                elif foo.num_left > k:
-                    foo = foo.left
-            
-            return foo.val
+                cur.num_left += 1
+                cur = cur.left
+        newNode = TreeNode(value=value,num_left=0)
+        if parent.value <= value:
+            parent.right = newNode
         else:
-            return 
+            parent.left = newNode
+        self.length += 1
+
+
+    def p_percentile(self, root, p): 
+        k = math.floor(p * self.length)
+
+        foo = self.root
+        while k > 0: 
+            if self.root.left: 
+                if self.root.left.num_below == k - 1:
+                    return self.root.val
+                elif self.root.left.num_below > k - 1:
+                    foo = foo.left
+                else:
+                    k -= foo.left.num_below + 1
+                    foo = foo.right
+        
+        return foo.val
+
+
+                
+                
+
+        
 
             
         
