@@ -13,6 +13,7 @@ class OrderStatisticsTree:
         self.length = 0
 
     def insert(self, value): 
+        pass 
         
 
 
