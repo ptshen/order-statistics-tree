@@ -33,8 +33,25 @@ class OrderStatisticsTree:
             parent.left = newNode
 
 
-    def p_percentile(self, p): 
-        pass
+    def p_percentile(self, root, p): 
+        k = math.floor(p * self.length)
+
+        foo = self.root
+        while k > 0: 
+            if self.root.left: 
+                if self.root.left.num_below == k - 1:
+                    return self.root.val
+                elif self.root.left.num_below > k - 1:
+                    foo = foo.left
+                else:
+                    k -= foo.left.num_below + 1
+                    foo = foo.right
+        
+        return foo.val
+
+
+                
+                
 
         
 
