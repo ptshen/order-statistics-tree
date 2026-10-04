@@ -27,7 +27,7 @@ class OrderStatisticsTree:
             k = 1
 
         while k > 0:
-            num_left = foo.left.val if foo.left else 0
+            num_left = foo.left.num_below if foo.left else 0
             if num_left + 1 == k:
                 return foo.val
             elif num_left + 1 > k: 
