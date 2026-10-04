@@ -21,6 +21,7 @@ class OrderStatisticsTree:
         parent = self.root
         while cur:
             parent = cur
+            cur.num_below += 1
             if cur.value <= value:
                 cur = cur.right
             else:
@@ -31,6 +32,7 @@ class OrderStatisticsTree:
             parent.right = newNode
         else:
             parent.left = newNode
+        self.length += 1
 
 
     def p_percentile(self, root, p): 
