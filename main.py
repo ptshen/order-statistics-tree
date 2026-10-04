@@ -12,10 +12,35 @@ class OrderStatisticsTree:
         self.root = None
         self.length = 0
 
+    """
+    Inserts node at correct position in binary tree. If node with value already exists, prefer the new node to be on the left. 
+    """
     def insert(self, value): 
-        pass 
-        
-
+        if not self.root:
+            self.root = TreeNode(value, num_below=1)
+            self.length += 1
+            return 
+    
+        foo = self.root
+        while foo:
+            foo.num_below += 1
+            
+            if value <= foo.value: 
+                if not foo.left: 
+                    c = TreeNode(value, num_below=1)
+                    foo.left = c
+                    self.length += 1
+                    return 
+                else: 
+                    foo = foo.left
+            else:
+                if not foo.right: 
+                    c = TreeNode(value, num_below=1)
+                    foo.right = c
+                    self.length += 1
+                    return 
+                else:
+                    foo = foo.right
 
     """
     Returns the value of the node associated with the pth percentile in the tree.     
@@ -33,7 +58,7 @@ class OrderStatisticsTree:
         while k > 0:
             num_left = foo.left.num_below if foo.left else 0
             if num_left + 1 == k:
-                return foo.val
+                return foo.value
             elif num_left + 1 > k: 
                 foo = foo.left
             else:
